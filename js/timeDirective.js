@@ -1,11 +1,28 @@
 var app = angular.module('timeApp');
 app.directive('showTime', function(){
 return {
+  scope:  {
+    nameAttr: '=name'
+  },
   restrict: 'E',
-  template:'<div> The current time is {{time}} </div>',
+  template:'<div ng-click="timeClicked()">Hello {{nameAttr}}, The current time is {{time}} </div>',
   link: function(scope, element, attrs){
     var currentTime = new Date();
     scope.time = currentTime.toString();
-  }
+  },
+  controller: function($scope) {
+    $scope.shortFormat = false;
+      $scope.timeClicked = function () {
+        if ($scope.shortFormat) {
+          $scope.time = new Date();
+          $scope.time.toDateString()
+        } else {
+          $scope.time = new Date();
+          $scope.ime = $scope.time.toString();
+        }
+
+        $scope.shortFormat = !$scope.shortFormat;
+      }
+    }
   }
 })
